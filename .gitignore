@@ -6,3 +6,4 @@ venv/
 .theia
 theia/
 node_modules
+frontend/
