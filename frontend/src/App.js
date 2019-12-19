@@ -8,11 +8,10 @@
    constructor(props) {
      super(props);
      this.state = {
-       viewCompleted: false,
+       viewCompleted: true,
        activeItem: {
-         title: "",
-         description: "",
-         completed: false
+         bank_name: "",
+         location: "",
        },
        todoList: []
      };
@@ -22,7 +21,7 @@
    }
    refreshList = () => {
      axios
-       .get("https://django-react-todo-yuki.herokuapp.com/api/todos/")
+       .get("https://backend-bank-yuki.herokuapp.com/bank/branches/")
        .then(res => this.setState({ todoList: res.data.results }))
        .catch(err => console.log(err));
    };
@@ -42,20 +41,20 @@
            Branches
          </span>
          <span
-           onClick={() => this.displayCompleted(false)}
-           className={this.state.viewCompleted ? "" : "active"}
+          //  onClick={() => this.displayCompleted(false)}
+          //  className={this.state.viewCompleted ? "" : "active"}
          >
            Customers
          </span>
          <span
-           onClick={() => this.displayCompleted(false)}
-           className={this.state.viewCompleted ? "" : "active"}
+          //  onClick={() => this.displayCompleted(false)}
+          //  className={this.state.viewCompleted ? "" : "active"}
          >
            Products
          </span>
          <span
-           onClick={() => this.displayCompleted(false)}
-           className={this.state.viewCompleted ? "" : "active"}
+          //  onClick={() => this.displayCompleted(false)}
+          //  className={this.state.viewCompleted ? "" : "active"}
          >
            Accounts
          </span>
@@ -63,10 +62,11 @@
      );
    };
    renderItems = () => {
-     const { viewCompleted } = this.state;
-     const newItems = this.state.todoList.filter(
-       item => item.completed === viewCompleted
-     );
+    //  const { viewCompleted } = this.state;
+    //  const newItems = this.state.todoList.filter(
+    //    item => item.completed === viewCompleted
+    //  );
+    const newItems = this.state.todoList
      return newItems.map(item => (
        <li
          key={item.id}
@@ -76,9 +76,9 @@
            className={`todo-title mr-2 ${
              this.state.viewCompleted ? "completed-todo" : ""
            }`}
-           title={item.description}
+           title={item.bank_name}
          >
-           {item.title}
+           {item.bank_name}
          </span>
          <span>
            <button
@@ -105,21 +105,21 @@
      this.toggle();
      if (item.id) {
        axios
-         .put(`https://django-react-todo-yuki.herokuapp.com/api/todos/${item.id}/`, item)
+         .put(`https://backend-bank-yuki.herokuapp.com/bank/branches/${item.id}/`, item)
          .then(res => this.refreshList());
        return;
      }
      axios
-       .post("https://django-react-todo-yuki.herokuapp.com/api/todos/", item)
+       .post("https://backend-bank-yuki.herokuapp.com/bank/branches/", item)
        .then(res => this.refreshList());
    };
    handleDelete = item => {
      axios
-       .delete(`https://django-react-todo-yuki.herokuapp.com/api/todos/${item.id}`)
+       .delete(`https://backend-bank-yuki.herokuapp.com/bank/branches/${item.id}`)
        .then(res => this.refreshList());
    };
    createItem = () => {
-     const item = { title: "", description: "", completed: false };
+     const item = { bank_name: "", location: ""};
      this.setState({ activeItem: item, modal: !this.state.modal });
    };
    editItem = item => {

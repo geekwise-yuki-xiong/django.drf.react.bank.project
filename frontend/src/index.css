@@ -14,7 +14,7 @@ body {
   cursor: pointer;
 }
 .completed-todo {
-  text-decoration: line-through;
+  /* text-decoration: line-through; */
 }
 .tab-list > span {
   padding: 5px 8px;
