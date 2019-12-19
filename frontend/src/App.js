@@ -1,7 +1,7 @@
  // frontend/src/App.js
 
  import React, { Component } from "react";
- import Modal from "./components/Modal";
+ import Modal from "./components/branchModal";
  import axios from "axios";
 
  class App extends Component {
@@ -13,7 +13,7 @@
          bank_name: "",
          location: "",
        },
-       todoList: []
+       branchList: []
      };
    }
    componentDidMount() {
@@ -22,7 +22,7 @@
    refreshList = () => {
      axios
        .get("https://backend-bank-yuki.herokuapp.com/bank/branches/")
-       .then(res => this.setState({ todoList: res.data.results }))
+       .then(res => this.setState({ branchList: res.data.results }))
        .catch(err => console.log(err));
    };
    displayCompleted = status => {
@@ -40,24 +40,24 @@
          >
            Branches
          </span>
-         //<span
-          //  onClick={() => this.displayCompleted(false)}
-          //  className={this.state.viewCompleted ? "" : "active"}
-         //>
-           //Customers
-         //</span>
-         //<span
-          //  onClick={() => this.displayCompleted(false)}
-          //  className={this.state.viewCompleted ? "" : "active"}
-         //>
-           //Products
-         //</span>
-         //<span
-          //  onClick={() => this.displayCompleted(false)}
-          //  className={this.state.viewCompleted ? "" : "active"}
-         //>
-           //Accounts
-         //</span>
+         {/* <span
+           onClick={() => this.displayCompleted(false)}
+           className={this.state.viewCompleted ? "" : "active"}
+         >
+           Customers
+         </span>
+         <span
+           onClick={() => this.displayCompleted(false)}
+           className={this.state.viewCompleted ? "" : "active"}
+         >
+           Products
+         </span>
+         <span
+           onClick={() => this.displayCompleted(false)}
+           className={this.state.viewCompleted ? "" : "active"}
+         >
+           Accounts
+         </span> */}
        </div>
      );
    };
@@ -66,7 +66,7 @@
     //  const newItems = this.state.todoList.filter(
     //    item => item.completed === viewCompleted
     //  );
-    const newItems = this.state.todoList
+    const newItems = this.state.branchList
      return newItems.map(item => (
        <li
          key={item.id}
