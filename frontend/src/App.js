@@ -40,24 +40,24 @@
          >
            Branches
          </span>
-         <span
+         //<span
           //  onClick={() => this.displayCompleted(false)}
           //  className={this.state.viewCompleted ? "" : "active"}
-         >
-           Customers
-         </span>
-         <span
+         //>
+           //Customers
+         //</span>
+         //<span
           //  onClick={() => this.displayCompleted(false)}
           //  className={this.state.viewCompleted ? "" : "active"}
-         >
-           Products
-         </span>
-         <span
+         //>
+           //Products
+         //</span>
+         //<span
           //  onClick={() => this.displayCompleted(false)}
           //  className={this.state.viewCompleted ? "" : "active"}
-         >
-           Accounts
-         </span>
+         //>
+           //Accounts
+         //</span>
        </div>
      );
    };
