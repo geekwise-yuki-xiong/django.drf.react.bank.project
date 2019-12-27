@@ -18,6 +18,7 @@
    }
    componentDidMount() {
      this.refreshList();
+     console.log("Hello SSH key is working")
    }
    refreshList = () => {
      axios
