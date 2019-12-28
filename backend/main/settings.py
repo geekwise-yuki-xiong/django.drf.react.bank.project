@@ -131,5 +131,5 @@ STATIC_URL = '/static/'
 django_heroku.settings(locals())
 
 CORS_ORIGIN_WHITELIST = (
-        'http://localhost:3000',
+        'https://frontend-bank-yuki.herokuapp.com',
     )
