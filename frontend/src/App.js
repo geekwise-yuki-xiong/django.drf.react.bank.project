@@ -31,29 +31,46 @@ class App extends Component {
     }
     return this.setState({ viewCompleted: false });
   };
+
+  displayBranch = () => {
+    console.log('Show branch model')
+  }
+
+  displayCustomer = () => {
+    console.log('Show customer model')
+  }
+
+  displayProduct = () => {
+    console.log('Show product model')
+  }
+
+  displayAccount = () => {
+    console.log('Show account model')
+  }
+
   renderTabList = () => {
     return (
       <div className="my-5 tab-list">
         <span
-          onClick={() => this.displayCompleted(true)}
+          onClick={() => this.displayBranch()}
           className={this.state.viewCompleted ? "active" : ""}
         >
           Branches
         </span>
         <span
-          onClick={() => this.displayCompleted(false)}
+          onClick={() => this.displayCustomer()}
           className={this.state.viewCompleted ? "" : "active"}
         >
           Customers
         </span>
         <span
-          onClick={() => this.displayCompleted(false)}
+          onClick={() => this.displayProduct()}
           className={this.state.viewCompleted ? "" : "active"}
         >
           Products
         </span>
         <span
-          onClick={() => this.displayCompleted(false)}
+          onClick={() => this.displayAccount()}
           className={this.state.viewCompleted ? "" : "active"}
         >
           Accounts
@@ -66,6 +83,7 @@ class App extends Component {
   //  const newItems = this.state.todoList.filter(
   //    item => item.completed === viewCompleted
   //  );
+  // --> FILTER THE DESIRED MODEL
   const newItems = this.state.branchList
     return newItems.map(item => (
       <li
