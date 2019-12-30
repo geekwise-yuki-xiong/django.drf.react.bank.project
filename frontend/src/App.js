@@ -18,7 +18,6 @@ class App extends Component {
   }
   componentDidMount() {
     this.refreshList();
-    console.log("Hello SSH key is working for everyone!")
   }
   refreshList = () => {
     axios
@@ -41,7 +40,7 @@ class App extends Component {
         >
           Branches
         </span>
-        {/* <span
+        <span
           onClick={() => this.displayCompleted(false)}
           className={this.state.viewCompleted ? "" : "active"}
         >
@@ -58,7 +57,7 @@ class App extends Component {
           className={this.state.viewCompleted ? "" : "active"}
         >
           Accounts
-        </span> */}
+        </span>
       </div>
     );
   };
