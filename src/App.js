@@ -26,7 +26,7 @@ class App extends Component {
   };
   refreshList = () => {
     axios
-      .get("http://127.0.0.1:8000/bank/branches/")
+      .get("https://backend-bank-yuki.herokuapp.com/bank/branches/")
       .then(res => this.setState({ branchList: res.data.results }))
       .catch(err => console.log(err));
   };
@@ -158,17 +158,17 @@ class App extends Component {
     this.toggle();
     if (item.id) {
       axios
-        .put(`http://127.0.0.1:8000/bank/branches/${item.id}/`, item)
+        .put(`https://backend-bank-yuki.herokuapp.com/bank/branches/${item.id}/`, item)
         .then(res => this.refreshList());
       return;
     }
     axios
-      .post("http://127.0.0.1:8000/bank/branches/", item)
+      .post("https://backend-bank-yuki.herokuapp.com/bank/branches/", item)
       .then(res => this.refreshList());
   };
   handleDelete = item => {
     axios
-      .delete(`http://127.0.0.1:8000/bank/branches/${item.id}`)
+      .delete(`https://backend-bank-yuki.herokuapp.com/bank/branches/${item.id}`)
       .then(res => this.refreshList());
   };
   createItem = () => {
