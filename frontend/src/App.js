@@ -8,70 +8,105 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewCompleted: true,
       activeItem: {
         bank_name: "",
         location: "",
       },
-      branchList: []
+      branchList: [],
+      branchActive: true,
+      customerActive: false,
+      productActive: false,
+      accountActive: false
+      // And so on...
+
     };
   }
   componentDidMount() {
     this.refreshList();
-  }
+  };
   refreshList = () => {
     axios
       .get("http://127.0.0.1:8000/bank/branches/")
       .then(res => this.setState({ branchList: res.data.results }))
       .catch(err => console.log(err));
   };
-  displayCompleted = status => {
+
+  displayBranch = status => {
     if (status) {
-      return this.setState({ viewCompleted: true });
+      console.log("show branch models")
+      return this.setState({ 
+        branchActive: true,
+        customerActive: false,
+        productActive: false,
+        accountActive: false
+       });
     }
-    return this.setState({ viewCompleted: false });
+    return this.setState({ branchActive: false });
   };
 
-  displayBranch = () => {
-    console.log('Show branch model')
-  }
+  displayCustomer = status => {
+    if (status) {
+      console.log("show customer models")
+      return this.setState({ 
+        branchActive: false,
+        customerActive: true,
+        productActive: false,
+        accountActive: false
+       });
+    }
+    return this.setState({ customerActive: false });
+  };
 
-  displayCustomer = () => {
-    console.log('Show customer model')
-  }
+  displayProduct = status => {
+    if (status) {
+      console.log("show product models")
+      return this.setState({ 
+        branchActive: false,
+        customerActive: false,
+        productActive: true,
+        accountActive: false
+       });
+    }
+    return this.setState({ productActive: false });
+  };
 
-  displayProduct = () => {
-    console.log('Show product model')
-  }
-
-  displayAccount = () => {
-    console.log('Show account model')
-  }
+  displayAccount = status => {
+    if (status) {
+      console.log("show account models")
+      return this.setState({ 
+        branchActive: false,
+        customerActive: false,
+        productActive: false,
+        accountActive: true
+       });
+    }
+    return this.setState({ accountActive: false });
+  };
 
   renderTabList = () => {
     return (
       <div className="my-5 tab-list">
         <span
-          onClick={() => this.displayBranch()}
-          className={this.state.viewCompleted ? "active" : ""}
+          onClick={() => this.displayBranch(true)}
+          className={this.state.branchActive ? "active" : ""}
         >
           Branches
         </span>
         <span
-          onClick={() => this.displayCustomer()}
-          className={this.state.viewCompleted ? "" : "active"}
+          onClick={() => this.displayCustomer(true)}
+          className={this.state.customerActive ? "active" : ""}
         >
           Customers
         </span>
         <span
-          onClick={() => this.displayProduct()}
-          className={this.state.viewCompleted ? "" : "active"}
+          onClick={() => this.displayProduct(true)}
+          className={this.state.productActive ? "active" : ""}
         >
           Products
         </span>
         <span
-          onClick={() => this.displayAccount()}
-          className={this.state.viewCompleted ? "" : "active"}
+          onClick={() => this.displayAccount(true)}
+          className={this.state.accountActive ? "active" : ""}
         >
           Accounts
         </span>
