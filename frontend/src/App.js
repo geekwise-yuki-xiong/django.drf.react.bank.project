@@ -2,6 +2,9 @@
 
 import React, { Component } from "react";
 import ModalBranch from "./components/branchModal";
+import ModalCustomer from "./components/customerModal";
+import ModalProduct from "./components/productModal";
+import ModalAccount from "./components/accountModal";
 import axios from "axios";
 
 class App extends Component {
