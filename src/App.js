@@ -1,24 +1,45 @@
 // frontend/src/App.js
 
 import React, { Component } from "react";
-import Modal from "./components/branchModal";
+import ModalBranch from "./components/branchModal";
 import axios from "axios";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: {
+      branchItem: {
         bank_name: "",
         location: "",
       },
       branchList: [],
+
+      customerItem: {
+        name: "",
+        email: "",
+        phone: "",
+        address: ""
+      },
+      customerList: [],
+
+      productItem: {
+        product_options: "",
+        product_owner: ""
+      },
+      productList: [],
+
+      accountItem: {
+        bank_partner: "",
+        holder: "",
+        balance: ""
+      },
+      accountList: [],
+
+      // Button active conditions
       branchActive: true,
       customerActive: false,
       productActive: false,
       accountActive: false
-      // And so on...
-
     };
   }
   componentDidMount() {
@@ -28,6 +49,18 @@ class App extends Component {
     axios
       .get("https://backend-bank-yuki.herokuapp.com/bank/branches/")
       .then(res => this.setState({ branchList: res.data.results }))
+      .catch(err => console.log(err));
+    axios
+      .get("http://127.0.0.1:8000/bank/customers/")
+      .then(res => this.setState({ customerList: res.data.results }))
+      .catch(err => console.log(err));
+    axios
+      .get("http://127.0.0.1:8000/bank/products/")
+      .then(res => this.setState({ productList: res.data.results }))
+      .catch(err => console.log(err));
+    axios
+      .get("http://127.0.0.1:8000/bank/accounts/")
+      .then(res => this.setState({ accountList: res.data.results }))
       .catch(err => console.log(err));
   };
 
@@ -114,42 +147,132 @@ class App extends Component {
     );
   };
   renderItems = () => {
-  //  const { viewCompleted } = this.state;
-  //  const newItems = this.state.todoList.filter(
-  //    item => item.completed === viewCompleted
-  //  );
-  // --> FILTER THE DESIRED MODEL
-  const newItems = this.state.branchList
-    return newItems.map(item => (
-      <li
-        key={item.id}
-        className="list-group-item d-flex justify-content-between align-items-center"
-      >
-        <span
-          className={`todo-title mr-2 ${
-            this.state.viewCompleted ? "completed-todo" : ""
-          }`}
-          title={item.bank_name}
+    let newItems;
+    if(this.state.branchActive) {
+      newItems = this.state.branchList
+      return newItems.map(item => (
+        <li
+          key={item.id}
+          className="list-group-item d-flex justify-content-between align-items-center"
         >
-          {item.bank_name}
-        </span>
-        <span>
-          <button
-            onClick={() => this.editItem(item)}
-            className="btn btn-secondary mr-2"
+          <span
+            className={`todo-title mr-2`}
+            title={item.bank_name}
           >
-            {" "}
-            Edit{" "}
-          </button>
-          <button
-            onClick={() => this.handleDelete(item)}
-            className="btn btn-danger"
+            {item.bank_name}
+          </span>
+          <span>
+            <button
+              onClick={() => this.editItem(item)}
+              className="btn btn-secondary mr-2"
+            >
+              {" "}
+              Edit{" "}
+            </button>
+            <button
+              onClick={() => this.handleDelete(item)}
+              className="btn btn-danger"
+            >
+              Delete{" "}
+            </button>
+          </span>
+        </li>
+      ));
+    }
+    else if(this.state.customerActive) {
+      newItems = this.state.customerList
+      return newItems.map(item => (
+        <li
+          key={item.id}
+          className="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span
+            className={`todo-title mr-2`}
+            title={item.name}
           >
-            Delete{" "}
-          </button>
-        </span>
-      </li>
-    ));
+            {item.name}<br/>{item.email}
+          </span>
+          <span>
+            <button
+              onClick={() => this.editItem(item)}
+              className="btn btn-secondary mr-2"
+            >
+              {" "}
+              Edit{" "}
+            </button>
+            <button
+              onClick={() => this.handleDelete(item)}
+              className="btn btn-danger"
+            >
+              Delete{" "}
+            </button>
+          </span>
+        </li>
+      ));
+    }
+    else if(this.state.productActive) {
+      newItems = this.state.productList
+      return newItems.map(item => (
+        <li
+          key={item.id}
+          className="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span
+            className={`todo-title mr-2`}
+            title={item.product_options}
+          >
+            {item.product_options}<br/>{item.product_owner}
+          </span>
+          <span>
+            <button
+              onClick={() => this.editItem(item)}
+              className="btn btn-secondary mr-2"
+            >
+              {" "}
+              Edit{" "}
+            </button>
+            <button
+              onClick={() => this.handleDelete(item)}
+              className="btn btn-danger"
+            >
+              Delete{" "}
+            </button>
+          </span>
+        </li>
+      ));
+    }
+    else {
+      newItems = this.state.accountList
+      return newItems.map(item => (
+        <li
+          key={item.id}
+          className="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span
+            className={`todo-title mr-2`}
+            title={item.holder}
+          >
+            {item.holder}<br/>Balance: ${item.balance}
+          </span>
+          <span>
+            <button
+              onClick={() => this.editItem(item)}
+              className="btn btn-secondary mr-2"
+            >
+              {" "}
+              Edit{" "}
+            </button>
+            <button
+              onClick={() => this.handleDelete(item)}
+              className="btn btn-danger"
+            >
+              Delete{" "}
+            </button>
+          </span>
+        </li>
+      ));
+    }
+    
   };
   toggle = () => {
     this.setState({ modal: !this.state.modal });
@@ -198,8 +321,8 @@ class App extends Component {
           </div>
         </div>
         {this.state.modal ? (
-          <Modal
-            activeItem={this.state.activeItem}
+          <ModalBranch
+            activeItem={this.state.branchItem}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />
