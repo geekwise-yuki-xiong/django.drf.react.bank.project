@@ -1,7 +1,3 @@
-// frontend/src/components/Modal.js
-//////////////////////////////////////////////
-// Still needs to update
-//////////////////////////////////////////////
 import React, { Component } from "react";
 import {
   Button,
@@ -34,27 +30,37 @@ export default class CustomModal extends Component {
     const { toggle, onSave } = this.props;
     return (
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> Branch Item </ModalHeader>
+        <ModalHeader toggle={toggle}> Account </ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="bank_name">Bank Name</Label>
-              <Input
-                type="text"
-                name="bank_name"
-                value={this.state.activeItem.bank_name}
-                onChange={this.handleChange}
-                placeholder="Enter the bank's name"
-              />
+              <Label style={{position: 'relative', bottom: '71px', paddingRight: '13px'}} for="bank_partner">Bank Partner</Label>
+              <select name="bank_partner">
+              <option value="EECU">EECU</option>
+              <option value="Bank of America">Bank of America</option>
+              <option value="Golden 1">Golden 1</option>
+              <option value="Bank of the West">Bank of the West</option>
+              <option value="Chase">Chase</option>
+              </select>
             </FormGroup>
             <FormGroup>
-              <Label for="location">Location</Label>
+              <Label style={{position: 'relative', bottom: '71px', paddingRight: '13px'}} for="holder">Account Holder</Label>
+              <select name="holder">
+              <option value="Hiroyuki">Hiroyuki</option>
+              <option value="Korey">Korey</option>
+              <option value="Stef">Stef</option>
+              <option value="De">De</option>
+              <option value="Fritz">Fritz</option>
+              </select>
+            </FormGroup>
+            <FormGroup>
+              <Label for="balance">Balance</Label>
               <Input
                 type="text"
-                name="location"
-                value={this.state.activeItem.location}
+                name="balance"
+                value={this.state.activeItem.balance}
                 onChange={this.handleChange}
-                placeholder="Enter the bank's location"
+                placeholder="Your balance"
               />
             </FormGroup>
           </Form>
