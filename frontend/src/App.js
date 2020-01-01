@@ -323,9 +323,34 @@ class App extends Component {
             </div>
           </div>
         </div>
-        {this.state.modal ? (
+
+        {(this.state.modal) && (this.state.branchActive)  ? (
           <ModalBranch
             activeItem={this.state.branchItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
+
+        {(this.state.modal) && (this.state.customerActive)  ? (
+          <ModalCustomer
+            activeItem={this.state.customerItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
+
+        {(this.state.modal) && (this.state.productActive)  ? (
+          <ModalProduct
+            activeItem={this.state.productItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
+
+        {(this.state.modal) && (this.state.accountActive)  ? (
+          <ModalAccount
+            activeItem={this.state.accountItem}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />
