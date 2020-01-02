@@ -42,7 +42,7 @@ class App extends Component {
       branchActive: true,
       customerActive: false,
       productActive: false,
-      accountActive: false
+      accountActive: false,
     };
   }
   componentDidMount() {
@@ -256,7 +256,10 @@ class App extends Component {
           </span>
           <span>
             <button
-              onClick={() => this.editItem(item)}
+              onClick={() => {
+                this.setState({ accountModalupdate: true })
+                this.editItem(item);
+              }}
               className="btn btn-secondary mr-2"
             >
               {" "}
@@ -435,6 +438,8 @@ class App extends Component {
           <ModalAccount
             activeItem={this.state.accountItem}
             customers={this.state.customerList}
+            editFlag={this.state.accountModalupdate}
+            createFlag={this.state.accountModalcreate}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />

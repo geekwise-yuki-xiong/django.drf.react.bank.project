@@ -16,15 +16,13 @@ export default class CustomModal extends Component {
     super(props);
     this.state = {
       activeItem: this.props.activeItem,
-      customers: this.props.customers
+      customers: this.props.customers,
+
     };
   }
   handleChange = e => {
     let { name, value } = e.target;
-    if (e.target.type === "checkbox") {
-      value = e.target.checked;
-    }
-    const activeItem = { ...this.state.activeItem, [name]: value };
+    const activeItem = { ...this.state.activeItem.balance, [name]: value };
     this.setState({ activeItem });
   };
   render() {
@@ -35,7 +33,7 @@ export default class CustomModal extends Component {
         <ModalHeader toggle={toggle}> Account </ModalHeader>
         <ModalBody>
           <Form>
-            <FormGroup>
+            {/* <FormGroup>
               <Label style={{position: 'relative', bottom: '5px', paddingRight: '13px'}} for="holder">Account Holder</Label>
               <select name="holder">
                 {this.state.customers.map((value, index) => {
@@ -43,7 +41,7 @@ export default class CustomModal extends Component {
                   })
                 }
               </select>
-            </FormGroup>
+            </FormGroup> */}
             <FormGroup>
               <Label for="balance">Balance</Label>
               <Input
