@@ -8,6 +8,7 @@ ModalBody,
 ModalFooter,
 Form,
 FormGroup,
+Input,
 Label
 } from "reactstrap";
 
@@ -32,27 +33,17 @@ render() {
     <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}> Product Item </ModalHeader>
         <ModalBody>
-        <p style={{fontWeight: 600}}>Hold 'ctrl' OR 'cmd' to select multiple products</p>
         <Form>
-            <FormGroup>
-            <Label style={{position: 'relative', bottom: '71px', paddingRight: '13px'}} for="product_options">Type</Label>
-            <select name="product_options" multiple>
-            <option value="checking">CHECKING</option>
-            <option value="savings">SAVINGS</option>
-            <option value="debit-line">DEBIT-LINE</option>
-            <option value="credit-line">CREDIT-LINE</option>
-            <option value="loan">LOANS</option>
-            </select>
-            </FormGroup>
-            <FormGroup>
-            <Label style={{position: 'relative', paddingRight: '13px'}} for="product_owner">Bank</Label>
-            <select name="product_owner">
-                <option value="eecu">EECU</option>
-                <option value="bank-of-america">Bank of America</option>
-                <option value="golden-1">Golden 1</option>
-                <option value="chase">Chase</option>
-            </select>
-            </FormGroup>
+          <FormGroup>
+            <Label for="product_name">Product Name</Label>
+                <Input
+                    type="text"
+                    name="product_name"
+                    value={this.state.activeItem.product_name}
+                    onChange={this.handleChange}
+                    placeholder="Enter the product name"
+                />
+          </FormGroup>
         </Form>
         </ModalBody>
         <ModalFooter>

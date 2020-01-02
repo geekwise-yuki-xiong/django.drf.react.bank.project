@@ -15,7 +15,8 @@ export default class CustomModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: this.props.activeItem
+      activeItem: this.props.activeItem,
+      customers: this.props.customers
     };
   }
   handleChange = e => {
@@ -28,29 +29,19 @@ export default class CustomModal extends Component {
   };
   render() {
     const { toggle, onSave } = this.props;
+
     return (
       <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}> Account </ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label style={{position: 'relative', bottom: '5px', paddingRight: '13px'}} for="bank_partner">Bank Partner</Label>
-              <select name="bank_partner">
-              <option value="EECU">EECU</option>
-              <option value="Bank of America">Bank of America</option>
-              <option value="Golden 1">Golden 1</option>
-              <option value="Bank of the West">Bank of the West</option>
-              <option value="Chase">Chase</option>
-              </select>
-            </FormGroup>
-            <FormGroup>
               <Label style={{position: 'relative', bottom: '5px', paddingRight: '13px'}} for="holder">Account Holder</Label>
               <select name="holder">
-              <option value="Hiroyuki">Hiroyuki</option>
-              <option value="Korey">Korey</option>
-              <option value="Stef">Stef</option>
-              <option value="De">De</option>
-              <option value="Fritz">Fritz</option>
+                {this.state.customers.map((value, index) => {
+                    return <option key={index} value={value}>{value.name} | {value.email}</option>
+                  })
+                }
               </select>
             </FormGroup>
             <FormGroup>

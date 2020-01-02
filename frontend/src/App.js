@@ -14,6 +14,8 @@ class App extends Component {
       branchItem: {
         bank_name: "",
         location: "",
+        products: "",
+        accounts: ""
       },
       branchList: [],
 
@@ -26,14 +28,11 @@ class App extends Component {
       customerList: [],
 
       productItem: {
-        product_options: "",
-        product_owner: ""
+        product_name: ""
       },
       productList: [],
-      // ownerFilter: "",
 
       accountItem: {
-        bank_partner: "",
         holder: "",
         balance: ""
       },
@@ -147,16 +146,6 @@ class App extends Component {
     );
   };
 
-  // async axiosDataProductOwner(productUrl) {
-  //     await axios
-  //       .get(productUrl)
-  //       .then(response => {
-  //         console.log(response.data.bank_name);
-  //         return response.data.bank_name;
-  //       })
-  //       .catch(err => console.log(err));
-  // };
-
   renderItems = () => {
     let newItems;
     if(this.state.branchActive) {
@@ -170,7 +159,7 @@ class App extends Component {
             className={`todo-title mr-2`}
             title={item.bank_name}
           >
-            {item.bank_name}
+            {item.bank_name}<br/>{item.location}
           </span>
           <span>
             <button
@@ -230,13 +219,9 @@ class App extends Component {
         >
           <span
             className={`todo-title mr-2`}
-            title={item.product_options}
+            title={item.product_name}
           >
-            {item.product_options}<br/>
-            {
-              // console.log(this.axiosDataProductOwner(item.product_owner).then(data => console.log(data)))
-              item.product_owner
-            }
+            {item.product_name}
           </span>
           <span>
             <button
@@ -265,9 +250,9 @@ class App extends Component {
         >
           <span
             className={`todo-title mr-2`}
-            title={item.holder}
+            title={item.holder.name}
           >
-            {item.holder}<br/>Balance: ${item.balance}
+            {item.holder.name}<br/>Balance: ${item.balance}
           </span>
           <span>
             <button
@@ -369,7 +354,7 @@ class App extends Component {
   };
   createItem = () => {
     if(this.state.branchActive) {
-      const item = { bank_name: "", location: "" };
+      const item = { bank_name: "", location: "", products: "", accounts: "" };
       this.setState({ activeItem: item, modal: !this.state.modal });
     }
 
@@ -379,12 +364,12 @@ class App extends Component {
     }
 
     else if(this.state.productActive) {
-      const item = { product_options: "", product_owner: "" };
+      const item = { product_name: "" };
       this.setState({ activeItem: item, modal: !this.state.modal });
     }
 
     else {
-      const item = { bank_partner: "", holder: "", balance: "" };
+      const item = { holder: "", balance: "" };
       this.setState({ activeItem: item, modal: !this.state.modal });
     }
   };
@@ -449,6 +434,7 @@ class App extends Component {
         {(this.state.modal) && (this.state.accountActive)  ? (
           <ModalAccount
             activeItem={this.state.accountItem}
+            customers={this.state.customerList}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />

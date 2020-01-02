@@ -33,7 +33,7 @@ class Product(models.Model):
     )
     
     def __str__(self):
-        return(f"{self.product_owner} | {self.product_name}")
+        return(f"{self.product_name}")
 
 class Account(models.Model):
     bank_partner = models.ForeignKey(
