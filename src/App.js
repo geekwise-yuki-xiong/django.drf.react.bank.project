@@ -30,7 +30,6 @@ class App extends Component {
         product_owner: ""
       },
       productList: [],
-      // ownerFilter: "",
 
       accountItem: {
         bank_partner: "",
@@ -147,16 +146,6 @@ class App extends Component {
     );
   };
 
-  // async axiosDataProductOwner(productUrl) {
-  //     await axios
-  //       .get(productUrl)
-  //       .then(response => {
-  //         console.log(response.data.bank_name);
-  //         return response.data.bank_name;
-  //       })
-  //       .catch(err => console.log(err));
-  // };
-
   renderItems = () => {
     let newItems;
     if(this.state.branchActive) {
@@ -232,11 +221,7 @@ class App extends Component {
             className={`todo-title mr-2`}
             title={item.product_options}
           >
-            {item.product_options}<br/>
-            {
-              // console.log(this.axiosDataProductOwner(item.product_owner).then(data => console.log(data)))
-              item.product_owner
-            }
+            {item.product_options}<br/>{item.product_owner}
           </span>
           <span>
             <button
