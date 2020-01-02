@@ -2,6 +2,9 @@
 
 import React, { Component } from "react";
 import ModalBranch from "./components/branchModal";
+import ModalCustomer from "./components/customerModal";
+import ModalProduct from "./components/productModal";
+import ModalAccount from "./components/accountModal";
 import axios from "axios";
 
 class App extends Component {
@@ -66,7 +69,6 @@ class App extends Component {
 
   displayBranch = status => {
     if (status) {
-      console.log("show branch models")
       return this.setState({ 
         branchActive: true,
         customerActive: false,
@@ -79,7 +81,6 @@ class App extends Component {
 
   displayCustomer = status => {
     if (status) {
-      console.log("show customer models")
       return this.setState({ 
         branchActive: false,
         customerActive: true,
@@ -92,7 +93,6 @@ class App extends Component {
 
   displayProduct = status => {
     if (status) {
-      console.log("show product models")
       return this.setState({ 
         branchActive: false,
         customerActive: false,
@@ -105,7 +105,6 @@ class App extends Component {
 
   displayAccount = status => {
     if (status) {
-      console.log("show account models")
       return this.setState({ 
         branchActive: false,
         customerActive: false,
@@ -146,6 +145,7 @@ class App extends Component {
       </div>
     );
   };
+
   renderItems = () => {
     let newItems;
     if(this.state.branchActive) {
@@ -279,27 +279,113 @@ class App extends Component {
   };
   handleSubmit = item => {
     this.toggle();
-    if (item.id) {
+    if(this.state.branchActive) {
+      if (item.id) {
+        axios
+          .put(`http://127.0.0.1:8000/bank/branches/${item.id}/`, item)
+          .then(res => this.refreshList());
+        return;
+      }
       axios
-        .put(`http://127.0.0.1:8000/bank/branches/${item.id}/`, item)
+        .post("http://127.0.0.1:8000/bank/branches/", item)
         .then(res => this.refreshList());
-      return;
     }
-    axios
-      .post("http://127.0.0.1:8000/bank/branches/", item)
-      .then(res => this.refreshList());
+
+    else if(this.state.customerActive) {
+      if (item.id) {
+        axios
+          .put(`http://127.0.0.1:8000/bank/customers/${item.id}/`, item)
+          .then(res => this.refreshList());
+        return;
+      }
+      axios
+        .post("http://127.0.0.1:8000/bank/customers/", item)
+        .then(res => this.refreshList());
+    }
+
+    else if(this.state.productActive) {
+      if (item.id) {
+        axios
+          .put(`http://127.0.0.1:8000/bank/products/${item.id}/`, item)
+          .then(res => this.refreshList());
+        return;
+      }
+      axios
+        .post("http://127.0.0.1:8000/bank/products/", item)
+        .then(res => this.refreshList());
+    }
+
+    else {
+      if (item.id) {
+        axios
+          .put(`http://127.0.0.1:8000/bank/accounts/${item.id}/`, item)
+          .then(res => this.refreshList());
+        return;
+      }
+      axios
+        .post("http://127.0.0.1:8000/bank/accounts/", item)
+        .then(res => this.refreshList());
+    }
   };
   handleDelete = item => {
-    axios
-      .delete(`http://127.0.0.1:8000/bank/branches/${item.id}`)
-      .then(res => this.refreshList());
+    if(this.state.branchActive) {
+      axios
+        .delete(`http://127.0.0.1:8000/bank/branches/${item.id}`)
+        .then(res => this.refreshList());
+    }
+
+    else if(this.state.customerActive) {
+      axios
+        .delete(`http://127.0.0.1:8000/bank/customers/${item.id}`)
+        .then(res => this.refreshList());
+    }
+
+    else if(this.state.productActive) {
+      axios
+        .delete(`http://127.0.0.1:8000/bank/products/${item.id}`)
+        .then(res => this.refreshList());
+    }
+
+    else if(this.state.accountActive) {
+      axios
+        .delete(`http://127.0.0.1:8000/bank/accounts/${item.id}`)
+        .then(res => this.refreshList());
+    }
   };
   createItem = () => {
-    const item = { bank_name: "", location: ""};
-    this.setState({ activeItem: item, modal: !this.state.modal });
+    if(this.state.branchActive) {
+      const item = { bank_name: "", location: "" };
+      this.setState({ activeItem: item, modal: !this.state.modal });
+    }
+
+    else if(this.state.customerActive) {
+      const item = { name: "", email: "", phone: "", address: "" };
+      this.setState({ activeItem: item, modal: !this.state.modal });
+    }
+
+    else if(this.state.productActive) {
+      const item = { product_options: "", product_owner: "" };
+      this.setState({ activeItem: item, modal: !this.state.modal });
+    }
+
+    else {
+      const item = { bank_partner: "", holder: "", balance: "" };
+      this.setState({ activeItem: item, modal: !this.state.modal });
+    }
   };
   editItem = item => {
-    this.setState({ activeItem: item, modal: !this.state.modal });
+    if(this.state.branchActive) {
+      this.setState({ branchItem: item, modal: !this.state.modal });
+    }
+    else if(this.state.customerActive) {
+      this.setState({ customerItem: item, modal: !this.state.modal });
+    }
+    else if(this.state.productActive) {
+      this.setState({ productItem: item, modal: !this.state.modal });
+    }
+    else {
+      this.setState({ accountItem: item, modal: !this.state.modal });
+    }
   };
   render() {
     return (
@@ -320,9 +406,34 @@ class App extends Component {
             </div>
           </div>
         </div>
-        {this.state.modal ? (
+
+        {(this.state.modal) && (this.state.branchActive)  ? (
           <ModalBranch
             activeItem={this.state.branchItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
+
+        {(this.state.modal) && (this.state.customerActive)  ? (
+          <ModalCustomer
+            activeItem={this.state.customerItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
+
+        {(this.state.modal) && (this.state.productActive)  ? (
+          <ModalProduct
+            activeItem={this.state.productItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
+
+        {(this.state.modal) && (this.state.accountActive)  ? (
+          <ModalAccount
+            activeItem={this.state.accountItem}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />

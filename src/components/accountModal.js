@@ -34,7 +34,7 @@ export default class CustomModal extends Component {
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label style={{position: 'relative', bottom: '71px', paddingRight: '13px'}} for="bank_partner">Bank Partner</Label>
+              <Label style={{position: 'relative', bottom: '5px', paddingRight: '13px'}} for="bank_partner">Bank Partner</Label>
               <select name="bank_partner">
               <option value="EECU">EECU</option>
               <option value="Bank of America">Bank of America</option>
@@ -44,7 +44,7 @@ export default class CustomModal extends Component {
               </select>
             </FormGroup>
             <FormGroup>
-              <Label style={{position: 'relative', bottom: '71px', paddingRight: '13px'}} for="holder">Account Holder</Label>
+              <Label style={{position: 'relative', bottom: '5px', paddingRight: '13px'}} for="holder">Account Holder</Label>
               <select name="holder">
               <option value="Hiroyuki">Hiroyuki</option>
               <option value="Korey">Korey</option>
