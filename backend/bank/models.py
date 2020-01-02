@@ -24,34 +24,26 @@ class Customer(models.Model):
         return(f"{self.name} | {self.email}")
 
 class Product(models.Model):
-    options = (
-        ('savings', 'SAVINGS'),
-        ('checking', 'CHECKING'),
-        ('credit-line', 'CREDIT-LINE'),
-        ('debit-line', 'DEBIT-LINE'),
-        ('loans', 'LOANS'),
-    )
-    product_options = models.CharField(
-        max_length=300,
-        choices=options,
-        default=options[0],
-    )
+    product_name = models.CharField(max_length=300)
 
     product_owner = models.ForeignKey(
         Branch,
+        related_name='products',
         on_delete=models.CASCADE,
     )
     
     def __str__(self):
-        return(f"{self.product_owner} | {self.product_options}")
+        return(f"{self.product_owner} | {self.product_name}")
 
 class Account(models.Model):
     bank_partner = models.ForeignKey(
         Branch,
+        related_name='accounts',
         on_delete=models.CASCADE,
     )
     holder = models.OneToOneField(
         Customer,
+        related_name='holder',
         on_delete=models.CASCADE,
     )
 

@@ -24,26 +24,26 @@ class BranchViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Branch.objects.all()
+    queryset = Branch.objects.all().order_by('id')
     serializer_class = BranchSerializer
 
 class CustomerViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Customer.objects.all()
+    queryset = Customer.objects.all().order_by('id')
     serializer_class = CustomerSerializer
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by('id')
     serializer_class = ProductSerializer
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Account.objects.all()
+    queryset = Account.objects.all().order_by('id')
     serializer_class = AccountSerializer

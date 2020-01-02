@@ -13,21 +13,32 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'name']
 
 class BranchSerializer(serializers.HyperlinkedModelSerializer):
+    accounts = serializers.StringRelatedField(many=True)
+    products = serializers.StringRelatedField(many=True)
     class Meta:
         model = Branch
-        fields = ['id', 'bank_name', 'location']
+        fields = ['id', 'bank_name', 'location', 'products', 'accounts']
+        paginate_by = 50
+        ordering = ['-id']
 
 class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Customer
         fields = ['id', 'name', 'email', 'phone', 'address']
+        paginate_by = 50
+        ordering = ['-id']
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'product_options', 'product_owner']
+        fields = ['id', 'product_name']
+        paginate_by = 50
+        ordering = ['-id']
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
+    holder = CustomerSerializer(required=True)
     class Meta:
         model = Account
-        fields = ['id', 'bank_partner', 'holder', 'balance']
+        fields = ['id', 'holder', 'balance']
+        paginate_by = 50
+        ordering = ['-id']
