@@ -13,9 +13,7 @@ class App extends Component {
     this.state = {
       branchItem: {
         bank_name: "",
-        location: "",
-        products: "",
-        accounts: ""
+        location: ""
       },
       branchList: [],
 
@@ -28,11 +26,13 @@ class App extends Component {
       customerList: [],
 
       productItem: {
-        product_name: ""
+        product_name: "",
+        product_owner: ""
       },
       productList: [],
 
       accountItem: {
+        bank_partner: "",
         holder: "",
         balance: ""
       },
@@ -221,7 +221,7 @@ class App extends Component {
             className={`todo-title mr-2`}
             title={item.product_name}
           >
-            {item.product_name}
+            {item.product_owner} | {item.product_name}
           </span>
           <span>
             <button
@@ -250,9 +250,9 @@ class App extends Component {
         >
           <span
             className={`todo-title mr-2`}
-            title={item.holder.name}
+            title={item.holder}
           >
-            {item.holder.name}<br/>Balance: ${item.balance}
+            {item.bank_partner} | {item.holder}<br/>Balance: ${item.balance}
           </span>
           <span>
             <button
@@ -320,6 +320,7 @@ class App extends Component {
 
     else {
       if (item.id) {
+        console.log(item.id)
         axios
           .put(`http://127.0.0.1:8000/bank/accounts/${item.id}/`, item)
           .then(res => this.refreshList());
@@ -357,7 +358,7 @@ class App extends Component {
   };
   createItem = () => {
     if(this.state.branchActive) {
-      const item = { bank_name: "", location: "", products: "", accounts: "" };
+      const item = { bank_name: "", location: "" };
       this.setState({ activeItem: item, modal: !this.state.modal });
     }
 
@@ -367,12 +368,12 @@ class App extends Component {
     }
 
     else if(this.state.productActive) {
-      const item = { product_name: "" };
+      const item = { product_name: "", product_owner: "" };
       this.setState({ activeItem: item, modal: !this.state.modal });
     }
 
     else {
-      const item = { holder: "", balance: "" };
+      const item = { bank_partner: "", holder: "", balance: "" };
       this.setState({ activeItem: item, modal: !this.state.modal });
     }
   };
@@ -437,9 +438,8 @@ class App extends Component {
         {(this.state.modal) && (this.state.accountActive)  ? (
           <ModalAccount
             activeItem={this.state.accountItem}
+            branches={this.state.branchList}
             customers={this.state.customerList}
-            editFlag={this.state.accountModalupdate}
-            createFlag={this.state.accountModalcreate}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />
