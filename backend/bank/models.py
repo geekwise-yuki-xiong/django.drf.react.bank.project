@@ -12,7 +12,7 @@ class Branch(models.Model):
     location = models.CharField(max_length=300)
 
     def __str__(self):
-        return(f"{self.bank_name}")
+        return(f"{self.bank_name} | {self.location}")
 
 class Customer(models.Model):
     name = models.CharField(max_length=300)
@@ -25,29 +25,15 @@ class Customer(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=300)
-
-    product_owner = models.ForeignKey(
-        Branch,
-        related_name='products',
-        on_delete=models.CASCADE,
-    )
+    product_owner = models.CharField(max_length=300)
     
     def __str__(self):
-        return(f"{self.product_name}")
+        return(f"{self.product_owner} >> {self.product_name}")
 
 class Account(models.Model):
-    bank_partner = models.ForeignKey(
-        Branch,
-        related_name='accounts',
-        on_delete=models.CASCADE,
-    )
-    holder = models.OneToOneField(
-        Customer,
-        related_name='holder',
-        on_delete=models.CASCADE,
-    )
-
+    bank_partner = models.CharField(max_length=300)
+    holder = models.CharField(max_length=300)
     balance = models.DecimalField(max_digits=15, decimal_places=2, validators=[MinValueValidator(0)])
 
     def __str__(self):
-        return(f"{self.holder.name} | Balance: ${self.balance}")
+        return(f"{self.holder} | {self.bank_partner} | Balance: ${self.balance}")

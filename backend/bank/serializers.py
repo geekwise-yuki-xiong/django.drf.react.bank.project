@@ -13,11 +13,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'name']
 
 class BranchSerializer(serializers.HyperlinkedModelSerializer):
-    accounts = serializers.StringRelatedField(many=True)
-    products = serializers.StringRelatedField(many=True)
     class Meta:
         model = Branch
-        fields = ['id', 'bank_name', 'location', 'products', 'accounts']
+        fields = ['id', 'bank_name', 'location']
         paginate_by = 50
         ordering = ['-id']
 
@@ -31,14 +29,13 @@ class CustomerSerializer(serializers.HyperlinkedModelSerializer):
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'product_name']
+        fields = ['id', 'product_name', 'product_owner']
         paginate_by = 50
         ordering = ['-id']
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
-    holder = CustomerSerializer(required=True)
     class Meta:
         model = Account
-        fields = ['id', 'holder', 'balance']
+        fields = ['id', 'bank_partner', 'holder', 'balance']
         paginate_by = 50
         ordering = ['-id']
