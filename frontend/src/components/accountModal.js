@@ -16,13 +16,11 @@ export default class CustomModal extends Component {
     super(props);
     this.state = {
       activeItem: this.props.activeItem,
-      branches: this.props.branches,
-      customers: this.props.customers
     };
   }
   handleChange = e => {
     let { name, value } = e.target;
-    let activeItem = { ...this.state.activeItem, [name]: value };
+    const activeItem = { ...this.state.activeItem, [name]: value };
     this.setState({ activeItem });
   };
   render() {
@@ -34,22 +32,24 @@ export default class CustomModal extends Component {
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label style={{position: 'relative', bottom: '5px', paddingRight: '13px'}} for="bank_partner">Bank Partner</Label>
-              <select type="text" name="bank_partner" onChange={this.handleChange}>
-                {this.state.branches.map((value, index) => {
-                    return <option key={index} value={value.bank_name}>{value.bank_name}</option>
-                  })
-                }
-              </select>
+              <Label for="bank_partner">Bank Partner</Label>
+              <Input
+                type="text"
+                name="bank_partner"
+                value={this.state.activeItem.bank_partner}
+                onChange={this.handleChange}
+                placeholder="Your bank partner"
+              />
             </FormGroup>
             <FormGroup>
-              <Label style={{position: 'relative', bottom: '5px', paddingRight: '13px'}} for="holder">Account Holder</Label>
-              <select type="text" name="holder" onChange={this.handleChange}>
-                {this.state.customers.map((value, index) => {
-                    return <option key={index} value={value.name}>{value.name} | {value.email}</option>
-                  })
-                }
-              </select>
+              <Label for="holder">Account Holder</Label>
+              <Input
+                type="text"
+                name="holder"
+                value={this.state.activeItem.holder}
+                onChange={this.handleChange}
+                placeholder="Account holder name"
+              />
             </FormGroup>
             <FormGroup>
               <Label for="balance">Balance</Label>
