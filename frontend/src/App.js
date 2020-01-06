@@ -23,7 +23,10 @@ class App extends Component {
   refreshList = () => {
     axios
       .get("http://127.0.0.1:8000/bank/branches/")
-      .then(res => this.setState({ branchList: res.data.results }))
+      .then(res => {
+        this.setState({ branchList: res.data.results });
+        console.log(this.state.branchList)
+      })
       .catch(err => console.log(err));
   };
   displayCompleted = status => {
