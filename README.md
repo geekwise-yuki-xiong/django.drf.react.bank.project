@@ -4,6 +4,11 @@ Bank App is for making CRUD function between the User and Database. You be able 
 [Backend](https://backend-bank-yuki.herokuapp.com/)<br>
 [Frontend](https://frontend-bank-yuki.herokuapp.com/)
 
+```
+Username: Demo
+Password: Demo1234
+```
+
 ## Installation 
 In order to run this app you need to install Django, Python, and NodeJS to interact with your database tables and install React to build a user interface. You can follow the instruction below to get this started.<br>
 ([Django](https://www.djangoproject.com/)) use the package manager [pip](https://pip.pypa.io/en/stable/) to install.
