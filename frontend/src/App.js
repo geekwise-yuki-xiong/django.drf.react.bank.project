@@ -6,7 +6,7 @@ import Models from "./components/Models";
 import PrivateRoute from "./components/common/PrivateRoute";
 import Header from "./components/layout/Header";
 
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from 'react-redux';
 import store from "./store";
