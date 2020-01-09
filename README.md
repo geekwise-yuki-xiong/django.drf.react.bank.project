@@ -5,8 +5,10 @@ Bank App is for making CRUD function between the User and Database. You be able 
 [Frontend](https://frontend-bank-yuki.herokuapp.com/)
 
 ```
-Username: Demo
-Password: Demo1234
+Username: admin
+Password: admin
+/* OR */
+Register and Login
 ```
 
 ## Installation 
