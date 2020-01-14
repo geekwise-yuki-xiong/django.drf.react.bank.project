@@ -68,6 +68,7 @@ export const login = (username, password) => dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
           });
+          console.log(res);
       })
       .catch(err => {
           dispatch(returnErrors(err.response.data, err.response.status));
