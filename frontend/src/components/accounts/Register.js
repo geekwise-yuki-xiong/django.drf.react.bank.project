@@ -3,13 +3,15 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
+import axios from "axios";
 
 export class Register extends Component {
     state = {
         username: "", 
         email: "",
         password: "",
-        justRegister: false
+        justRegister: false,
+        groups: []
     };
 
     static propTypes = {
@@ -19,7 +21,30 @@ export class Register extends Component {
 
     componentDidMount() {
       this.setState({justRegister: false});
-    }
+      this.getGroupList();
+    };
+
+    getGroupList() {
+      axios
+        .get('http://127.0.0.1:8000/groups/')
+        .then( res => {
+          this.setState({ groups: res.data.results });
+        })
+        .catch(err => console.log(err));
+    };
+
+    renderGroupOptions() {
+      console.log(this.state.groups)
+      return this.state.groups.map(group => (
+        <option value={`${group.id}`}>{group.name}</option>
+      ))
+    };
+
+    handleChange = e => {
+      let { name, value } = e.target;
+      const activeItem = { ...this.state.activeItem, [name]: value };
+        this.setState({ activeItem });
+    };
 
     onSubmit = e => {
         e.preventDefault();
@@ -31,11 +56,11 @@ export class Register extends Component {
         };
         this.props.register(newUser);
         this.setState({justRegister: true});
-    }
+    };
 
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
-    }
+    };
 
     render() {
         if(this.props.isAuthenticated) {
@@ -79,6 +104,16 @@ export class Register extends Component {
                       onChange={this.onChange}
                       value={password}
                     />
+                  </div>
+                  <div className="form-group">
+                    <label>Group</label>
+                    <select
+                      className="form-control"
+                      name="groups"
+                      value={this.state.groups}
+                      onChange={this.handleChange}>
+                        {this.renderGroupOptions()}
+                    </select> 
                   </div>
                   <div className="form-group">
                     <button type="submit" className="btn btn-primary">Register</button>
