@@ -68,7 +68,6 @@ export const login = (username, password) => dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
           });
-          console.log(res);
       })
       .catch(err => {
           dispatch(returnErrors(err.response.data, err.response.status));
@@ -80,7 +79,7 @@ export const login = (username, password) => dispatch => {
 };
 
 // Register new user
-export const register = ({ username, email, password }) => dispatch => {
+export const register = ({ username, email, password, groups }) => dispatch => {
     // Headers
     const config = {
         headers: {
@@ -89,7 +88,7 @@ export const register = ({ username, email, password }) => dispatch => {
     }
 
     // Request Body 
-    const body = JSON.stringify({ username, email, password });
+    const body = JSON.stringify({ username, email, password, groups });
 
     axios
       .post('http://127.0.0.1:8000/users/api/auth/register', body, config)

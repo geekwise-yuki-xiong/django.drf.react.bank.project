@@ -11,7 +11,8 @@ export class Register extends Component {
         email: "",
         password: "",
         justRegister: false,
-        groups: []
+        groups: [1],
+        groupList: []
     };
 
     static propTypes = {
@@ -28,31 +29,30 @@ export class Register extends Component {
       axios
         .get('http://127.0.0.1:8000/groups/')
         .then( res => {
-          this.setState({ groups: res.data.results });
+          this.setState({ groupList: res.data.results });
         })
         .catch(err => console.log(err));
     };
 
     renderGroupOptions() {
-      console.log(this.state.groups)
-      return this.state.groups.map(group => (
-        <option value={`${group.id}`}>{group.name}</option>
+      return this.state.groupList.map(group => (
+        <option key={group.id} value={group.id}>{group.name}</option>
       ))
     };
 
     handleChange = e => {
-      let { name, value } = e.target;
-      const activeItem = { ...this.state.activeItem, [name]: value };
-        this.setState({ activeItem });
+      const { value } = e.target;
+      this.setState({ groups: [value]});
     };
 
     onSubmit = e => {
         e.preventDefault();
-        const { username, email, password } = this.state;
+        const { username, email, password, groups } = this.state;
         const newUser = {
             username,
             password,
-            email
+            email,
+            groups
         };
         this.props.register(newUser);
         this.setState({justRegister: true});
@@ -110,7 +110,7 @@ export class Register extends Component {
                     <select
                       className="form-control"
                       name="groups"
-                      value={this.state.groups}
+                      // value={this.state.groups}
                       onChange={this.handleChange}>
                         {this.renderGroupOptions()}
                     </select> 
