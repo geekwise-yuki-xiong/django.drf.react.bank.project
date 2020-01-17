@@ -541,6 +541,91 @@ class Models extends Component {
       this.setState({ accountItem: item, modal: !this.state.modal });
     }
   };
+
+  authCheckAdd() {
+    if(this.state.branchActive){
+      if(this.state.groups === "member" || this.state.groups === "branch staff" || this.state.groups === "branch admin") {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+      else if(this.state.groups === "bank staff" || this.state.groups === "bank admin") {
+        return(
+          <button onClick={this.createItem} className="btn btn-primary">
+            Add Branch
+          </button>
+        );
+      }
+      else {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+    }
+    else if(this.state.customerActive){
+      if(this.state.groups === "member") {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+      else if(this.state.groups === "bank staff" || this.state.groups === "bank admin" || this.state.groups === "branch staff" || this.state.groups === "branch admin") {
+        return(
+          <button onClick={this.createItem} className="btn btn-primary">
+            Add Customer
+          </button>
+        );
+      }
+      else {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+    }
+    else if(this.state.productActive){
+      if(this.state.groups === "member" || this.state.groups === "branch staff") {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+      else if(this.state.groups === "bank admin" || this.state.groups === "bank staff" || this.state.groups === "branch admin") {
+        return(
+          <button onClick={this.createItem} className="btn btn-primary">
+            Add Product
+          </button>
+        );
+      }
+      else {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+    }
+    else if(this.state.accountActive){
+      if(this.state.groups === "member") {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+      else if(this.state.groups === "bank admin" || this.state.groups === "bank staff" || this.state.groups === "branch admin" || this.state.groups === "branch staff") {
+        return(
+          <button onClick={this.createItem} className="btn btn-primary">
+            Add Account
+          </button>
+        );
+      }
+      else {
+        return(
+          <button className="noShow"></button>
+        );
+      }
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      )
+    }
+  };
+
   render() {
     return (
       <main className="content">
@@ -549,9 +634,10 @@ class Models extends Component {
             <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3">
                 <div className="">
-                <button onClick={this.createItem} className="btn btn-primary">
+                  {this.authCheckAdd()}
+                {/* <button onClick={this.createItem} className="btn btn-primary">
                     Add item
-                </button>
+                </button> */}
                 </div>
                 {this.renderTabList()}
                 <ul className="list-group list-group-flush">
