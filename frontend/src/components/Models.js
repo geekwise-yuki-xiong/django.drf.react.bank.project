@@ -7,6 +7,7 @@ import ModalProduct from "./productModal";
 import ModalAccount from "./accountModal";
 
 import axios from "axios";
+import { connect } from "react-redux";
 
 class Models extends Component {
   constructor(props) {
@@ -44,7 +45,11 @@ class Models extends Component {
       customerActive: false,
       productActive: false,
       accountActive: false,
+
+      // User group
+      groups: ""
     };
+
   }
   componentDidMount() {
     this.refreshList();
@@ -52,7 +57,12 @@ class Models extends Component {
   refreshList = () => {
     axios
       .get("http://127.0.0.1:8000/bank/branches/")
-      .then(res => this.setState({ branchList: res.data.results }))
+      .then(res => {
+          this.setState({ branchList: res.data.results });
+          this.setState({ groups: this.props.auth.user.groups[0].name });
+          console.log(this.state.groups);
+          }
+        )
       .catch(err => console.log(err));
     axios
       .get("http://127.0.0.1:8000/bank/customers/")
@@ -146,6 +156,193 @@ class Models extends Component {
       </div>
     );
   };
+// "member"
+// "branch staff"
+// "branch admin"
+// "bank staff"
+// "bank admin"
+  authCheckDeleteBranch(item) {
+    if(this.state.groups === "member" || this.state.groups === "branch staff" || this.state.groups === "branch admin" || this.state.groups === "bank staff") {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+    else if(this.state.groups === "bank admin") {
+      return(
+        <button
+          onClick={() => this.handleDelete(item)}
+          className="btn btn-danger"
+        >
+          Delete{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
+
+  authCheckEditBranch(item) {
+    if(this.state.groups === "member" || this.state.groups === "branch staff" || this.state.groups === "branch admin") {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+    else if(this.state.groups === "bank staff" || this.state.groups === "bank admin") {
+      return(
+        <button
+          onClick={() => this.editItem(item)}
+          className="btn btn-secondary mr-2"
+        >
+          {" "}
+          Edit{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
+
+  authCheckDeleteCustomer(item) {
+    if(this.state.groups === "member" || this.state.groups === "branch staff") {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+    else if(this.state.groups === "branch admin" || this.state.groups === "bank staff" || this.state.groups === "bank admin") {
+      return(
+        <button
+          onClick={() => this.handleDelete(item)}
+          className="btn btn-danger"
+        >
+          Delete{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
+
+  authCheckEditCustomer(item) {
+    if(this.state.groups === "member" || this.state.groups === "branch staff" || this.state.groups === "branch admin" || this.state.groups === "bank staff" || this.state.groups === "bank admin") {
+      return(
+        <button
+          onClick={() => this.editItem(item)}
+          className="btn btn-secondary mr-2"
+        >
+          {" "}
+          Edit{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
+
+  authCheckDeleteProduct(item) {
+    if(this.state.groups === "member" || this.state.groups === "branch staff" || this.state.groups === "branch admin") {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+    else if(this.state.groups === "bank admin" || this.state.groups === "bank staff") {
+      return(
+        <button
+          onClick={() => this.handleDelete(item)}
+          className="btn btn-danger"
+        >
+          Delete{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
+
+  authCheckEditProduct(item) {
+    if(this.state.groups === "member" || this.state.groups === "branch staff" || this.state.groups === "branch admin") {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+    else if(this.state.groups === "bank staff" || this.state.groups === "bank admin") {
+      return(
+        <button
+          onClick={() => this.editItem(item)}
+          className="btn btn-secondary mr-2"
+        >
+          {" "}
+          Edit{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
+
+  authCheckDeleteAccount(item) {
+    if(this.state.groups === "member" || this.state.groups === "branch staff") {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+    else if(this.state.groups === "branch admin" || this.state.groups === "bank staff" || this.state.groups === "bank admin") {
+      return(
+        <button
+          onClick={() => this.handleDelete(item)}
+          className="btn btn-danger"
+        >
+          Delete{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
+
+  authCheckEditAccount(item) {
+    if(this.state.groups === "member") {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+    else if(this.state.groups === "branch staff" || this.state.groups === "branch admin" || this.state.groups === "bank staff" || this.state.groups === "bank admin") {
+      return(
+        <button
+          onClick={() => this.editItem(item)}
+          className="btn btn-secondary mr-2"
+        >
+          {" "}
+          Edit{" "}
+        </button>
+      );
+    }
+    else {
+      return(
+        <button className="noShow"></button>
+      );
+    }
+  };
 
   renderItems = () => {
     if(this.state.branchActive) {
@@ -162,19 +359,8 @@ class Models extends Component {
             {item.bank_name}<br/>{item.location}
           </span>
           <span>
-            <button
-              onClick={() => this.editItem(item)}
-              className="btn btn-secondary mr-2"
-            >
-              {" "}
-              Edit{" "}
-            </button>
-            <button
-              onClick={() => this.handleDelete(item)}
-              className="btn btn-danger"
-            >
-              Delete{" "}
-            </button>
+            {this.authCheckEditBranch(item)}
+            {this.authCheckDeleteBranch(item)}
           </span>
         </li>
       ));
@@ -193,19 +379,8 @@ class Models extends Component {
             {item.name}<br/>{item.email}
           </span>
           <span>
-            <button
-              onClick={() => this.editItem(item)}
-              className="btn btn-secondary mr-2"
-            >
-              {" "}
-              Edit{" "}
-            </button>
-            <button
-              onClick={() => this.handleDelete(item)}
-              className="btn btn-danger"
-            >
-              Delete{" "}
-            </button>
+            {this.authCheckEditCustomer(item)}
+            {this.authCheckDeleteCustomer(item)}
           </span>
         </li>
       ));
@@ -224,19 +399,8 @@ class Models extends Component {
             {item.product_owner} | {item.product_name}
           </span>
           <span>
-            <button
-              onClick={() => this.editItem(item)}
-              className="btn btn-secondary mr-2"
-            >
-              {" "}
-              Edit{" "}
-            </button>
-            <button
-              onClick={() => this.handleDelete(item)}
-              className="btn btn-danger"
-            >
-              Delete{" "}
-            </button>
+            {this.authCheckEditProduct(item)}
+            {this.authCheckDeleteProduct(item)}
           </span>
         </li>
       ));
@@ -255,21 +419,8 @@ class Models extends Component {
             {item.bank_partner} | {item.holder}<br/>Balance: ${item.balance}
           </span>
           <span>
-            <button
-              onClick={() => {
-                this.editItem(item);
-              }}
-              className="btn btn-secondary mr-2"
-            >
-              {" "}
-              Edit{" "}
-            </button>
-            <button
-              onClick={() => this.handleDelete(item)}
-              className="btn btn-danger"
-            >
-              Delete{" "}
-            </button>
+            {this.authCheckEditAccount(item)}
+            {this.authCheckDeleteAccount(item)}
           </span>
         </li>
       ));
@@ -444,4 +595,12 @@ class Models extends Component {
     );
   }
 }
-export default Models;
+// export default Models;
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+)(Models);

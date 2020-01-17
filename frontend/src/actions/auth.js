@@ -12,6 +12,7 @@ import {
     REGISTER_SUCCESS
 }
 from './types';
+// import auth from '../reducers/auth';
 
 // Check token & load user
 export const loadUser = () => (dispatch, getState) => {
@@ -42,7 +43,7 @@ export const loadUser = () => (dispatch, getState) => {
           });
       })
       .catch(err => {
-          dispatch(returnErrors(err.response.data, err.response.status));
+        //   dispatch(returnErrors(err.response.data, err.response.status));
           dispatch({
               type: AUTH_ERROR
           });
@@ -68,13 +69,14 @@ export const login = (username, password) => dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
           });
+        //   console.log(res.data.user);
       })
       .catch(err => {
-          dispatch(returnErrors(err.response.data, err.response.status));
+        //   dispatch(returnErrors(err.response.data, err.response.status));
           dispatch({
               type: LOGIN_FAIL
           });
-          alert(err.response.data.non_field_errors);
+        //   alert(err.response.data.non_field_errors);
       });
 };
 
