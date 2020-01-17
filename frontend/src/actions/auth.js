@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { returnErrors } from './messages';
 
 import {
     USER_LOADED,
@@ -43,7 +42,6 @@ export const loadUser = () => (dispatch, getState) => {
           });
       })
       .catch(err => {
-        //   dispatch(returnErrors(err.response.data, err.response.status));
           dispatch({
               type: AUTH_ERROR
           });
@@ -69,14 +67,12 @@ export const login = (username, password) => dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
           });
-        //   console.log(res.data.user);
       })
       .catch(err => {
-        //   dispatch(returnErrors(err.response.data, err.response.status));
           dispatch({
               type: LOGIN_FAIL
           });
-        //   alert(err.response.data.non_field_errors);
+          alert("Incorrect Credentials");
       });
 };
 
@@ -103,11 +99,10 @@ export const register = ({ username, email, password, groups }) => dispatch => {
 
       })
       .catch(err => {
-          dispatch(returnErrors(err.response.data, err.response.status));
           dispatch({
               type: REGISTER_FAIL
           });
-          alert(err.response.data.username);
+          alert("Username cannot include spaces (OR) Invalid information was provided");
 
       });
 };
@@ -137,6 +132,6 @@ export const logout = () => (dispatch, getState) => {
           });
       })
       .catch(err => {
-          dispatch(returnErrors(err.response.data, err.response.status));
+        //   dispatch(returnErrors(err.response.data, err.response.status));
       });
 };

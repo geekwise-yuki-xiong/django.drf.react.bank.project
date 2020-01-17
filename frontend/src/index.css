@@ -27,3 +27,9 @@ body {
 .noShow {
   display: none !important;
 }
+.redUserText {
+  color: red;
+}
+.blackUserText {
+  color: black;
+}

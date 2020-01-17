@@ -76,7 +76,7 @@ export class Register extends Component {
                 <h2 className="text-center">Register</h2>
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
-                    <label>Username</label>
+                    <label className="redUserText"><strong className="blackUserText">Username</strong> *cannot include spaces</label>
                     <input
                       type="text"
                       className="form-control"
@@ -86,7 +86,7 @@ export class Register extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Email</label>
+                    <label><strong>Email</strong></label>
                     <input
                       type="email"
                       className="form-control"
@@ -96,7 +96,7 @@ export class Register extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Password</label>
+                    <label><strong>Password</strong></label>
                     <input
                       type="password"
                       className="form-control"
@@ -106,7 +106,7 @@ export class Register extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Group</label>
+                    <label><strong>Group</strong></label>
                     <select
                       className="form-control"
                       name="groups"

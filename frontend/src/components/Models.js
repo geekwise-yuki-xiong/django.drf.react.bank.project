@@ -60,7 +60,6 @@ class Models extends Component {
       .then(res => {
           this.setState({ branchList: res.data.results });
           this.setState({ groups: this.props.auth.user.groups[0].name });
-          console.log(this.state.groups);
           }
         )
       .catch(err => console.log(err));
