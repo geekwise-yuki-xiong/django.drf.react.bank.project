@@ -11,6 +11,7 @@ export class Register extends Component {
         email: "",
         password: "",
         justRegister: false,
+        justRegisterUser: false,
         groups: [1],
         groupList: []
     };
@@ -22,6 +23,7 @@ export class Register extends Component {
 
     componentDidMount() {
       this.setState({justRegister: false});
+      this.setState({justRegisterUser: false});
       this.getGroupList();
     };
 
@@ -63,9 +65,9 @@ export class Register extends Component {
     };
 
     render() {
-        if(this.props.isAuthenticated) {
-          return <Redirect to="/"/>;
-        }
+        // if(this.props.isAuthenticated) {
+        //   return <Redirect to="/"/>;
+        // }
         if(this.state.justRegister) {
           return <Redirect to="/login"/>;
         }
