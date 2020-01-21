@@ -8,7 +8,9 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_FAIL,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    RESET_SUCCESS,
+    RESET_FAIL
 }
 from './types';
 // import auth from '../reducers/auth';
@@ -73,6 +75,35 @@ export const login = (username, password) => dispatch => {
               type: LOGIN_FAIL
           });
           alert("Incorrect Credentials");
+      });
+};
+
+// Password Reset
+export const reset = (username, password) => dispatch => {
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    // Request Body 
+    const body = JSON.stringify({ username, password });
+
+    axios
+      .put('http://127.0.0.1:8000/users/passwords', body, config)
+      .then(res => {
+          dispatch({
+            type: RESET_SUCCESS,
+            payload: res.data
+          });
+          alert("Password successfully reset. Please login with new password.")
+      })
+      .catch(err => {
+          dispatch({
+              type: RESET_FAIL
+          });
+          alert("Username not found");
       });
 };
 

@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { login } from "../../actions/auth";
+import { reset } from "../../actions/auth";
 
-export class Login extends Component {
+export class Reset extends Component {
     state = {
         username: "", 
-        password: ""
+        password: "",
+        justReset: false
     };
 
     static propTypes = {
-        login: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool
     };
 
+    componentDidMount() {
+        this.setState({ justReset: false });
+    }
+
     onSubmit = e => {
         e.preventDefault();
-        this.props.login(this.state.username, this.state.password);
+        this.props.reset(this.state.username, this.state.password);
+        this.setState({ justReset: true });
     };
 
     onChange = e => {
@@ -28,11 +34,14 @@ export class Login extends Component {
         if(this.props.isAuthenticated){
             return <Redirect to="/"/>
         }
+        if(this.state.justReset){
+            return <Redirect to="/login"/>
+        }
         const { username, password } = this.state;
         return (
             <div className="col-md-6 m-auto">
               <div className="card card-body mt-5">
-                <h2 className="text-center">Login</h2>
+                <h2 className="text-center">Password Reset</h2>
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
                     <label><strong>Username</strong></label>
@@ -55,14 +64,8 @@ export class Login extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button type="submit" className="btn btn-primary">Reset</button>
                   </div>
-                  <p>
-                    Don't have an account? <Link to="/register">Register</Link>
-                  </p>
-                  <p>
-                    Forgot password? <Link to="/pass-reset">Renew Here</Link>
-                  </p>
                 </form>
               </div>
             </div>
@@ -74,4 +77,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { reset })(Reset);
