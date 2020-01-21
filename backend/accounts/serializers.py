@@ -4,25 +4,25 @@ from django.contrib.auth import authenticate
 
 
 # Password Serializer
-# class PasswordSerializer(serializers.Serializer):
-#     username = serializers.CharField()
-#     password = serializers.CharField()
+class PasswordSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
 
-#     def create(self, validated_data):
-#         pass
+    def create(self, validated_data):
+        pass
 
-#     def update(self, instance, validated_data):
-#         pass
-#         # instance.username = validated_data.get('username', instance.username)
-#         # instance.password = validated_data.get('hashedNewPassword', instance.password)
-#         # instance.save()
-#         # return instance
+    def update(self, instance, validated_data):
+        pass
+        # instance.username = validated_data.get('username', instance.username)
+        # instance.password = validated_data.get('hashedNewPassword', instance.password)
+        # instance.save()
+        # return instance
 
-#     def validate(self, data):
-#         """ check that username and new password are different """
-#         if data["username"] == data["password"]:
-#             raise serializers.ValidationError("Username and new password should be different")
-#         return data
+    def validate(self, data):
+        """ check that username and new password are different """
+        if data["username"] == data["password"]:
+            raise serializers.ValidationError("Username and new password should be different")
+        return data
 
 # Permission Serializer
 class PermissionSerializer(serializers.ModelSerializer):
