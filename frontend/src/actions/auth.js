@@ -95,7 +95,6 @@ export const register = ({ username, email, password, groups }) => dispatch => {
             type: REGISTER_SUCCESS,
             payload: res.data
           });
-          alert("You have successfully registered an account. Please login.");
 
       })
       .catch(err => {

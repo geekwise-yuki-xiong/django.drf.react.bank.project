@@ -27,12 +27,13 @@ export class Header extends Component {
           </button>
         </li>
         <li>
-          <button
-            onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
-          >
-            Register a user
-          </button>
+          <Link to="/register" className="noTextDecorations">
+            <button
+              className="nav-link btn btn-info btn-sm text-light"
+            >
+              Register a user
+            </button>
+          </Link>
         </li>
       </ul>
     );

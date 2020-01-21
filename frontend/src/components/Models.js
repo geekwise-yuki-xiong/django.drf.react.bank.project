@@ -53,7 +53,6 @@ class Models extends Component {
   }
   componentDidMount() {
     this.refreshList();
-    console.log(this.props.auth);
   };
   refreshList = () => {
     axios

@@ -13,7 +13,8 @@ export class Register extends Component {
         justRegister: false,
         justRegisterUser: false,
         groups: [1],
-        groupList: []
+        groupList: [],
+        groupName: ""
     };
 
     static propTypes = {
@@ -31,15 +32,40 @@ export class Register extends Component {
       axios
         .get('http://127.0.0.1:8000/groups/')
         .then( res => {
+          if(this.props.auth.user != null){
+            this.setState({ groupName: this.props.auth.user.groups[0].name });
+          }
           this.setState({ groupList: res.data.results });
         })
         .catch(err => console.log(err));
     };
 
     renderGroupOptions() {
-      return this.state.groupList.map(group => (
-        <option key={group.id} value={group.id}>{group.name}</option>
-      ))
+      if(!this.props.isAuthenticated || this.state.groupName === "member") {
+        return this.state.groupList.slice(0, 1).map(group => (
+          <option key={group.id} value={group.id}>{group.name}</option>
+        ));
+      }
+      else if(this.state.groupName === "branch staff") {
+        return this.state.groupList.slice(0, 2).map(group => (
+          <option key={group.id} value={group.id}>{group.name}</option>
+        ));
+      }
+      else if(this.state.groupName === "branch admin") {
+        return this.state.groupList.slice(0, 3).map(group => (
+          <option key={group.id} value={group.id}>{group.name}</option>
+        ));
+      }
+      else if(this.state.groupName === "bank staff") {
+        return this.state.groupList.slice(0, 4).map(group => (
+          <option key={group.id} value={group.id}>{group.name}</option>
+        ));
+      }
+      else {
+        return this.state.groupList.map(group => (
+          <option key={group.id} value={group.id}>{group.name}</option>
+        ));
+      }
     };
 
     handleChange = e => {
@@ -57,7 +83,13 @@ export class Register extends Component {
             groups
         };
         this.props.register(newUser);
-        this.setState({justRegister: true});
+        if(!this.props.isAuthenticated) {
+          this.setState({justRegister: true});
+          alert("You have successfully registered an account. Please login.");
+        }
+        else {
+          alert("You have successfully registered " + this.state.username)
+        }
     };
 
     onChange = e => {
@@ -65,13 +97,11 @@ export class Register extends Component {
     };
 
     render() {
-        // if(this.props.isAuthenticated) {
-        //   return <Redirect to="/"/>;
-        // }
         if(this.state.justRegister) {
           return <Redirect to="/login"/>;
         }
         const { username, email, password } = this.state;
+        const { isAuthenticated } = this.props.auth;
         return (
             <div className="col-md-6 m-auto">
               <div className="card card-body mt-5">
@@ -112,7 +142,6 @@ export class Register extends Component {
                     <select
                       className="form-control"
                       name="groups"
-                      // value={this.state.groups}
                       onChange={this.handleChange}>
                         {this.renderGroupOptions()}
                     </select> 
@@ -120,9 +149,9 @@ export class Register extends Component {
                   <div className="form-group">
                     <button type="submit" className="btn btn-primary">Register</button>
                   </div>
-                  <p>
+                  {isAuthenticated ? "" : <p>
                     Already have an account? <Link to="/login">Login</Link>
-                  </p>
+                  </p>}
                 </form>
               </div>
             </div>
@@ -131,7 +160,8 @@ export class Register extends Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, { register })(Register);
