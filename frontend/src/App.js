@@ -6,6 +6,7 @@ import Models from "./components/Models";
 import PrivateRoute from "./components/common/PrivateRoute";
 import Header from "./components/layout/Header";
 import Reset from "./components/accounts/PassReset";
+import Home from "./components/home";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -24,7 +25,8 @@ class App extends Component {
           <Router>
             <Header/>
             <Switch>
-              <PrivateRoute exact path="/" component={Models}/>
+              <PrivateRoute exact path="/" component={Home}/>
+              <PrivateRoute exact path="/models" component={Models}/>
               <Route exact path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
               <Route path="/pass-reset" component={Reset}/>
