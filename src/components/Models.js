@@ -56,7 +56,7 @@ class Models extends Component {
   };
   refreshList = () => {
     axios
-      .get("http://127.0.0.1:8000/bank/branches/")
+      .get("https://frontend-bank-yuki.herokuapp.com/bank/branches/")
       .then(res => {
           this.setState({ branchList: res.data.results });
           this.setState({ groups: this.props.auth.user.groups[0].name });
@@ -64,15 +64,15 @@ class Models extends Component {
         )
       .catch(err => console.log(err));
     axios
-      .get("http://127.0.0.1:8000/bank/customers/")
+      .get("https://frontend-bank-yuki.herokuapp.com/bank/customers/")
       .then(res => this.setState({ customerList: res.data.results }))
       .catch(err => console.log(err));
     axios
-      .get("http://127.0.0.1:8000/bank/products/")
+      .get("https://frontend-bank-yuki.herokuapp.com/bank/products/")
       .then(res => this.setState({ productList: res.data.results }))
       .catch(err => console.log(err));
     axios
-      .get("http://127.0.0.1:8000/bank/accounts/")
+      .get("https://frontend-bank-yuki.herokuapp.com/bank/accounts/")
       .then(res => this.setState({ accountList: res.data.results }))
       .catch(err => console.log(err));
   };
