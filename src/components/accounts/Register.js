@@ -30,7 +30,7 @@ export class Register extends Component {
 
     getGroupList() {
       axios
-        .get('http://127.0.0.1:8000/groups/')
+        .get('https://backend-bank-yuki.herokuapp.com/groups/')
         .then( res => {
           if(this.props.auth.user != null){
             this.setState({ groupName: this.props.auth.user.groups[0].name });

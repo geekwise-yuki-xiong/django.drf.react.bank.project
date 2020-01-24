@@ -434,36 +434,36 @@ class Models extends Component {
     if(this.state.branchActive) {
       if (item.id) {
         axios
-          .put(`http://127.0.0.1:8000/bank/branches/${item.id}/`, item)
+          .put(`https://backend-bank-yuki.herokuapp.com/bank/branches/${item.id}/`, item)
           .then(res => this.refreshList());
         return;
       }
       axios
-        .post("http://127.0.0.1:8000/bank/branches/", item)
+        .post("https://backend-bank-yuki.herokuapp.com/bank/branches/", item)
         .then(res => this.refreshList());
     }
 
     else if(this.state.customerActive) {
       if (item.id) {
         axios
-          .put(`http://127.0.0.1:8000/bank/customers/${item.id}/`, item)
+          .put(`https://backend-bank-yuki.herokuapp.com/bank/customers/${item.id}/`, item)
           .then(res => this.refreshList());
         return;
       }
       axios
-        .post("http://127.0.0.1:8000/bank/customers/", item)
+        .post("https://backend-bank-yuki.herokuapp.com/bank/customers/", item)
         .then(res => this.refreshList());
     }
 
     else if(this.state.productActive) {
       if (item.id) {
         axios
-          .put(`http://127.0.0.1:8000/bank/products/${item.id}/`, item)
+          .put(`https://backend-bank-yuki.herokuapp.com/bank/products/${item.id}/`, item)
           .then(res => this.refreshList());
         return;
       }
       axios
-        .post("http://127.0.0.1:8000/bank/products/", item)
+        .post("https://backend-bank-yuki.herokuapp.com/bank/products/", item)
         .then(res => this.refreshList());
     }
 
@@ -471,37 +471,37 @@ class Models extends Component {
       if (item.id) {
         console.log(item.id)
         axios
-          .put(`http://127.0.0.1:8000/bank/accounts/${item.id}/`, item)
+          .put(`https://backend-bank-yuki.herokuapp.com/bank/accounts/${item.id}/`, item)
           .then(res => this.refreshList());
         return;
       }
       axios
-        .post("http://127.0.0.1:8000/bank/accounts/", item)
+        .post("https://backend-bank-yuki.herokuapp.com/bank/accounts/", item)
         .then(res => this.refreshList());
     }
   };
   handleDelete = item => {
     if(this.state.branchActive) {
       axios
-        .delete(`http://127.0.0.1:8000/bank/branches/${item.id}`)
+        .delete(`https://backend-bank-yuki.herokuapp.com/bank/branches/${item.id}`)
         .then(res => this.refreshList());
     }
 
     else if(this.state.customerActive) {
       axios
-        .delete(`http://127.0.0.1:8000/bank/customers/${item.id}`)
+        .delete(`https://backend-bank-yuki.herokuapp.com/bank/customers/${item.id}`)
         .then(res => this.refreshList());
     }
 
     else if(this.state.productActive) {
       axios
-        .delete(`http://127.0.0.1:8000/bank/products/${item.id}`)
+        .delete(`https://backend-bank-yuki.herokuapp.com/bank/products/${item.id}`)
         .then(res => this.refreshList());
     }
 
     else if(this.state.accountActive) {
       axios
-        .delete(`http://127.0.0.1:8000/bank/accounts/${item.id}`)
+        .delete(`https://backend-bank-yuki.herokuapp.com/bank/accounts/${item.id}`)
         .then(res => this.refreshList());
     }
   };
