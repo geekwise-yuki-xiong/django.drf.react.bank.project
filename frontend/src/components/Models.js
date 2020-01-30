@@ -55,14 +55,12 @@ class Models extends Component {
   refreshList = () => {
     // Get token from state
     const token = this.props.auth.token;
-    // Headers
+    // Config headers to Authorization and add token
     const config = {
         headers: {
-          'Content-Type': 'application/json'
+          'Authorization': `Token ${token}`
         }
     }
-    // token add to headers config
-    config.headers['Authorization'] = `Token ${token}`;
     axios
       .get('http://127.0.0.1:8000/bank/branches/', config)
       .then(res => {

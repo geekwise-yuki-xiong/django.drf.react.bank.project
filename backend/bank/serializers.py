@@ -4,7 +4,8 @@ from bank.models import Branch, Customer, Account, Product
 class BranchSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Branch
-        fields = ['id', 'bank_name', 'location']
+        fields = '__all__'
+        # fields = ['id', 'bank_name', 'location']
 
 class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
