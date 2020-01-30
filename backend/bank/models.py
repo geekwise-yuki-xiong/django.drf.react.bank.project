@@ -13,7 +13,7 @@ class Branch(models.Model):
     location = models.CharField(max_length=300)
     owner = models.ForeignKey(
         User,
-        related_name="branches",
+        related_name="owner",
         on_delete=models.CASCADE,
         null=True
     )

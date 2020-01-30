@@ -1,5 +1,3 @@
-// frontend/src/App.js
-
 import React, { Component } from "react";
 import ModalBranch from "./branchModal";
 import ModalCustomer from "./customerModal";
@@ -55,13 +53,22 @@ class Models extends Component {
     this.refreshList();
   };
   refreshList = () => {
+    // Get token from state
+    const token = this.props.auth.token;
+    // Headers
+    const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    }
+    // token add to headers config
+    config.headers['Authorization'] = `Token ${token}`;
     axios
-      .get("http://127.0.0.1:8000/bank/branches/")
+      .get('http://127.0.0.1:8000/bank/branches/', config)
       .then(res => {
-          this.setState({ branchList: res.data.results });
-          this.setState({ groups: this.props.auth.user.groups[0].name });
-          }
-        )
+        this.setState({ branchList: res.data.results });
+        this.setState({ groups: this.props.auth.user.groups[0].name });
+      })
       .catch(err => console.log(err));
     axios
       .get("http://127.0.0.1:8000/bank/customers/")

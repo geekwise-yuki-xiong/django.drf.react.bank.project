@@ -3,23 +3,21 @@ from bank.models import Branch, Customer, Product, Account
 from rest_framework import viewsets, permissions
 from bank.serializers import BranchSerializer, CustomerSerializer, ProductSerializer, AccountSerializer
 
+
 # Create your views here.
 class BranchViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     queryset = Branch.objects.all().order_by('id')
-    serializer_class = BranchSerializer
-
-    # permission_classes = [
-    #     permissions.IsAuthenticated,
-    # ]
     # serializer_class = BranchSerializer
 
-    # def get_queryset(self):
-    #     return self.request.user.branches.all()
-    # def perform_create(self, serializer):
-    #     serializer.save(owner=self.request.user)
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = BranchSerializer
+
+    def get_queryset(self):
+        return self.request.user.owner.all()
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class CustomerViewSet(viewsets.ModelViewSet):
     """
