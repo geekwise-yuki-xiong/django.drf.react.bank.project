@@ -6,7 +6,7 @@ Bank App will apply CRUD functions between the User and Database. You will be ab
 
 ```
 Username: admin
-Password: admin1234
+Password: admin
 /* OR */
 Register and Login
 ```
