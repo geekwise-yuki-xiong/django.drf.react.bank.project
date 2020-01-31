@@ -16,6 +16,7 @@ class Models extends Component {
         location: ""
       },
       branchList: [],
+      owner: "http://127.0.0.1:8000/users/",
 
       customerItem: {
         name: "",
@@ -58,7 +59,8 @@ class Models extends Component {
     // Config headers to Authorization and add token
     const config = {
         headers: {
-          'Authorization': `Token ${token}`
+          'Authorization': `Token ${token}`,
+          'Content-Type': 'application/json'
         }
     }
     axios
@@ -438,13 +440,37 @@ class Models extends Component {
     this.toggle();
     if(this.state.branchActive) {
       if (item.id) {
+        // Get token from state
+        const token = this.props.auth.token;
+        // Config headers to Authorization and add token
+        const config = {
+            headers: {
+              'Authorization': `Token ${token}`,
+              'Content-Type': 'application/json'
+            }
+        }
+        item["owner"] = `${this.state.owner}${this.props.auth.user.id}/`;
+        const { bank_name, location, owner } = item;
+        const body = JSON.stringify({ bank_name, location, owner });
         axios
-          .put(`http://127.0.0.1:8000/bank/branches/${item.id}/`, item)
+          .put(`http://127.0.0.1:8000/bank/branches/${item.id}/`, body, config)
           .then(res => this.refreshList());
         return;
       }
+      // Get token from state
+      const token = this.props.auth.token;
+      // Config headers to Authorization and add token
+      const config = {
+          headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+          }
+      }
+      item["owner"] = `${this.state.owner}${this.props.auth.user.id}/`;
+      const { bank_name, location, owner } = item;
+      const body = JSON.stringify({ bank_name, location, owner });
       axios
-        .post("http://127.0.0.1:8000/bank/branches/", item)
+        .post("http://127.0.0.1:8000/bank/branches/", body, config)
         .then(res => this.refreshList());
     }
 
@@ -474,7 +500,6 @@ class Models extends Component {
 
     else {
       if (item.id) {
-        console.log(item.id)
         axios
           .put(`http://127.0.0.1:8000/bank/accounts/${item.id}/`, item)
           .then(res => this.refreshList());
@@ -487,8 +512,17 @@ class Models extends Component {
   };
   handleDelete = item => {
     if(this.state.branchActive) {
+      // Get token from state
+      const token = this.props.auth.token;
+      // Config headers to Authorization and add token
+      const config = {
+          headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+          }
+      }
       axios
-        .delete(`http://127.0.0.1:8000/bank/branches/${item.id}`)
+        .delete(`http://127.0.0.1:8000/bank/branches/${item.id}`, config)
         .then(res => this.refreshList());
     }
 
